@@ -1,0 +1,323 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org" lang="pt-br">
+
+<head>
+
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="description" content="">
+  <meta name="author" content="">
+
+  <title>GerenSys - Estoque</title>
+
+  <!-- Custom fonts for this template-->
+  <link href="/vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
+
+  <!-- Page level plugin CSS-->
+  <link href="/vendor/datatables/dataTables.bootstrap4.css" rel="stylesheet">
+
+  <!-- Custom styles for this template-->
+  <link href="/css/sb-admin.css" rel="stylesheet">
+
+</head>
+
+<body id="page-top">
+
+  <!-- Modal -->
+  <div class="modal" tabindex="-1" role="dialog" id="delete-modal" aria-labelledby="modalLabel">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title">Excluir Item</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <p>Deseja realmente excluir este item?</p>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-primary">Sim</button>
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Não</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <nav class="navbar navbar-expand navbar-dark bg-dark static-top">
+
+    <a class="navbar-brand mr-1" href="/">GerenSys</a>
+
+    <button class="btn btn-link btn-sm text-white order-1 order-sm-0" id="sidebarToggle" href="#">
+      <i class="fas fa-bars"></i>
+    </button>
+
+    <!-- Navbar -->
+    <ul class="navbar-nav ml-auto ml-md-0 direito">
+      <li class="nav-item dropdown no-arrow">
+        <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-toggle="dropdown"
+          aria-haspopup="true" aria-expanded="false">
+          <i class="fas fa-user-circle fa-fw"></i>
+        </a>
+        <div class="dropdown-menu dropdown-menu-right" aria-labelledby="userDropdown">
+          <a class="dropdown-item" href="/logout">Sair</a>
+        </div>
+      </li>
+    </ul>
+
+  </nav>
+
+  <div id="wrapper">
+
+    <!-- Sidebar -->
+    <ul class="sidebar navbar-nav">
+      <li class="nav-item active">
+        <a class="nav-link" href="/">
+          <i class="fas fa-home"></i>
+          <span>Página inicial</span>
+        </a>
+      </li>
+      <li class="nav-item dropdown">
+        <a class="nav-link dropdown-toggle" href="#" id="dropdownMenuButton" role="button" data-toggle="dropdown"
+          aria-haspopup="true" aria-expanded="false">
+          <i class="fas fa-user-tie"></i>
+          <span>Funcionários</span>
+        </a>
+        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+          <a class="dropdown-item" href="/cadastrofuncionarios">Cadastrar</a>
+          <a class="dropdown-item" href="/listafuncionarios">Listar</a>
+        </div>
+      <li class="nav-item dropdown">
+        <a class="nav-link dropdown-toggle" href="#" id="dropdownMenuButton" role="button" data-toggle="dropdown"
+          aria-haspopup="true" aria-expanded="false">
+          <i class="fas fa-car-side"></i>
+          <span>Veículos</span>
+        </a>
+        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+          <a class="dropdown-item" href="/cadastroveiculo">Cadastrar</a>
+          <a class="dropdown-item" href="/listaveiculo">Listar</a>
+        </div>
+      </li>
+
+      <li class="nav-item dropdown">
+        <a class="nav-link dropdown-toggle" href="#" id="pagesDropdown" role="button" data-toggle="dropdown"
+          aria-haspopup="true" aria-expanded="false">
+          <i class="fas fa-tools"></i>
+          <span>Manutenções</span>
+        </a>
+        <div class="dropdown-menu" aria-labelledby="pagesDropdown">
+          <a class="dropdown-item" href="/listamanutencao ">Listar</a>
+        </div>
+      </li>
+      <li class="nav-item dropdown">
+        <a class="nav-link dropdown-toggle" href="#" id="pagesDropdown" role="button" data-toggle="dropdown"
+          aria-haspopup="true" aria-expanded="false">
+          <i class="fas fa-truck-moving"></i>
+          <span>Viagens</span>
+        </a>
+        <div class="dropdown-menu" aria-labelledby="pagesDropdown">
+          <a class="dropdown-item" href="/cadastroviagem">Cadastrar</a>
+          <a class="dropdown-item" href="/listaviagem">Lista</a>
+        </div>
+      </li>
+      <li class="nav-item dropdown">
+        <a class="nav-link dropdown-toggle" href="#" id="pagesDropdown" role="button" data-toggle="dropdown"
+          aria-haspopup="true" aria-expanded="false">
+          <i class="fas fa-box-open"></i>
+          <span>Estoque</span>
+        </a>
+        <div class="dropdown-menu" aria-labelledby="pagesDropdown">
+          <a class="dropdown-item" href="/cadastraestoque">Cadastrar</a>
+          <a class="dropdown-item" href="/listaestoque">Lista</a>
+        </div>
+      </li>
+      <li class="nav-item dropdown">
+        <a class="nav-link dropdown-toggle" href="#" id="pagesDropdown" role="button" data-toggle="dropdown"
+          aria-haspopup="true" aria-expanded="false">
+          <i class="fas fa-dollar-sign"></i>
+          <span>Finanças</span>
+        </a>
+        <div class="dropdown-menu" aria-labelledby="pagesDropdown">
+          <a class="dropdown-item" href="/despesas">Despesas</a>
+        </div>
+      </li>
+      <li class="nav-item dropdown">
+        <a class="nav-link dropdown-toggle" href="#" id="pagesDropdown" role="button" data-toggle="dropdown"
+          aria-haspopup="true" aria-expanded="false">
+          <i class="far fa-chart-bar"></i>
+          <span>Relatórios</span>
+        </a>
+        <div class="dropdown-menu" aria-labelledby="pagesDropdown">
+          <a class="dropdown-item" href="listar-relatorio.html">Listar</a>
+        </div>
+      </li>
+    </ul>
+
+    <div id="content-wrapper">
+
+      <div class="container-fluid">
+
+        <!-- Breadcrumbs-->
+        <ol class="breadcrumb">
+          <li class="breadcrumb-item">
+            <a href="#">Lista</a>
+          </li>
+          <li class="breadcrumb-item active">Estoque</li>
+        </ol>
+
+        <div id="top" class="row">
+          <div class="col-md-3">
+            <h3>Estoque</h3>
+          </div>
+
+          <div class="col-md-6">
+            <form action="pesquisaritem" method="post">
+              <div class="input-group">
+                <input name="nomepesquisa" class="form-control" id="search" type="text"
+                  placeholder="Pesquisar item por nome">
+                <span class="input-group-btn">
+                  <button class="btn btn-primary" type="submit">
+                    <span class="fas fa-search"></span>
+                  </button>
+                </span>
+              </div>
+            </form>
+          </div>
+
+          <div class="col-md-3">
+            <a href="/cadastraestoque" class="btn btn-primary pull-right h2">Cadastrar Peças</a>
+          </div>
+        </div> <!-- /#top -->
+
+        <!-- Tabelas listagem -->
+        <div class="table-responsive">
+          <table class="table table-hover">
+            <thead>
+              <tr>
+                <th>#</th>
+                <th>Nome</th>
+                <th>Tipo</th>
+                <th>Descrição</th>
+                <th>Quantidade</th>
+                <th>Preço</th>
+                <th>Ações</th>
+              </tr>
+            </thead>
+            <tbody th:remove="${#arrays.isEmpty(itens)} ? all : 'all-but-first'">
+              <tr th:each="item: ${itens}">
+                <th scope="row" th:text="${item.id}">1</th>
+                <td th:text="${item.nomeItem}">1334</td>
+                <td th:text="${item.tipo}">Pneu</td>
+                <td th:text="${item.descricaoPeca}">Pneu novo michilan</td>
+                <td th:text="${item.quantidade}">100</td>
+                <td th:text="${'R$ '+item.preco}">100</td>
+                <td class="actions">
+                  <a class="btn btn-warning btn-sm" th:href="@{/editaritem/{iditem}(iditem = ${item.id})}">Editar</a>
+                  <a class="btn btn-danger btn-sm" th:href="@{/removeritem/{iditem}(iditem = ${item.id})}">Excluir</a>
+                </td>
+              </tr>
+              <tr>
+                <th scope="row">2</th>
+                <td>1335</td>
+                <td>Embreagem</td>
+                <td>Embreagem Luk</td>
+                <td>Kit de Embreagem Luk</td>
+                <td>50</td>
+                <td class="actions">
+                  <a class="btn btn-warning btn-sm" href="cadastro-estoque.html">Editar</a>
+                  <a class="btn btn-danger btn-sm" href="#" data-toggle="modal" data-target="#delete-modal">Excluir</a>
+                </td>
+              </tr>
+              <tr>
+                <th scope="row">3</th>
+                <td>1336</td>
+                <td>Pastilha de freio</td>
+                <td>Fiat</td>
+                <td>Kit Pastilha de freio Fita</td>
+                <td>30</td>
+                <td class="actions">
+                  <a class="btn btn-warning btn-sm" href="cadastro-estoque.html">Editar</a>
+                  <a class="btn btn-danger btn-sm" href="#" data-toggle="modal" data-target="#delete-modal">Excluir</a>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <!-- navegacao -->
+        <nav aria-label="Page navigation example">
+          <ul class="pagination">
+            <li class="page-item disabled"><a class="page-link" href="#">&lt; Anterior</a></li>
+            <li class="page-item active"><a class="page-link" href="#">1</a></li>
+            <li class="page-item"><a class="page-link" href="#">2</a></li>
+            <li class="page-item"><a class="page-link" href="#">3</a></li>
+            <li class="page-item"><a class="page-link" href="#">Próximo &gt;</a></li>
+          </ul>
+        </nav>
+
+      </div>
+      <!-- /.container-fluid -->
+
+      <!-- Sticky Footer -->
+      <footer class="sticky-footer">
+        <div class="container my-auto">
+          <div class="copyright text-center my-auto">
+            <span>Copyright © GerenSys 2019</span>
+          </div>
+        </div>
+      </footer>
+
+    </div>
+    <!-- /.content-wrapper -->
+
+  </div>
+  <!-- /#wrapper -->
+
+  <!-- Scroll to Top Button-->
+  <a class="scroll-to-top rounded" href="#page-top">
+    <i class="fas fa-angle-up"></i>
+  </a>
+
+  <!-- Logout Modal-->
+  <div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+    aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">Deseja Sair?</h5>
+          <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">×</span>
+          </button>
+        </div>
+        <div class="modal-body">Selecione "Sair" para encerrar sua sessão.</div>
+        <div class="modal-footer">
+          <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancelar</button>
+          <a class="btn btn-primary" href="login.html">Sair</a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Bootstrap core JavaScript-->
+  <script src="/vendor/jquery/jquery.min.js"></script>
+  <script src="/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+
+  <!-- Core plugin JavaScript-->
+  <script src="/vendor/jquery-easing/jquery.easing.min.js"></script>
+
+  <!-- Page level plugin JavaScript-->
+  <script src="/vendor/chart.js/Chart.min.js"></script>
+  <script src="/vendor/datatables/jquery.dataTables.js"></script>
+  <script src="/vendor/datatables/dataTables.bootstrap4.js"></script>
+
+  <!-- Custom scripts for all pages-->
+  <script src="/js/sb-admin.min.js"></script>
+
+  <!-- Demo scripts for this page-->
+  <script src="/js/demo/datatables-demo.js"></script>
+  <script src="/js/demo/chart-area-demo.js"></script>
+
+</body>
+
+</html>
